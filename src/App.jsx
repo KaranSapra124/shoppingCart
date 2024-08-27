@@ -5,17 +5,36 @@ import "./App.css";
 import Products from "./Components/Products";
 import { cartContext } from "./utils/cartContext";
 import Cart from "./Components/Cart";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import Home from "./Components/Home";
+import About from "./Components/About";
+import Contact from "./Components/Contact";
 
 function App() {
-  const [cartVal, setCartVal] = useState([]);
+  const appRoutes = createBrowserRouter([
+    {
+      path: "/",
+      element: <Navbar />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+      ],
+    },
+  ]);
   return (
     <>
-      <cartContext.Provider
-        value={{ cartVal: cartVal, setCartVal: setCartVal }}
-      >
-        <Products />
-        <Cart />
-      </cartContext.Provider>
+      <RouterProvider router={appRoutes} />
     </>
   );
 }
